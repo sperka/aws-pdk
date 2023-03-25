@@ -2512,6 +2512,10 @@ aws-prototyping-sdk library.</p>
     <span class="n">default_release_branch</span><span class="o">=</span><span class="s2">&quot;mainline&quot;</span><span class="p">,</span>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-api&quot;</span><span class="p">,</span>
     <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;packages/api&quot;</span><span class="p">,</span>
+    <span class="n">service_name</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;namespace&quot;</span><span class="p">:</span> <span class="s2">&quot;com.mycompany&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service_name&quot;</span><span class="p">:</span> <span class="s2">&quot;MyService&quot;</span>
+    <span class="p">},</span>
     <span class="n">client_languages</span><span class="o">=</span><span class="p">[</span><span class="n">ClientLanguage</span><span class="o">.</span><span class="n">TYPESCRIPT</span><span class="p">,</span> <span class="n">ClientLanguage</span><span class="o">.</span><span class="n">PYTHON</span><span class="p">,</span> <span class="n">ClientLanguage</span><span class="o">.</span><span class="n">JAVA</span><span class="p">],</span>
     <span class="n">documentation_formats</span><span class="o">=</span><span class="p">[</span><span class="n">DocumentationFormat</span><span class="o">.</span><span class="n">HTML2</span><span class="p">,</span> <span class="n">DocumentationFormat</span><span class="o">.</span><span class="n">PLANTUML</span><span class="p">,</span> <span class="n">DocumentationFormat</span><span class="o">.</span><span class="n">MARKDOWN</span><span class="p">]</span>
 <span class="p">)</span>
@@ -2552,10 +2556,11 @@ aws-prototyping-sdk library.</p>
     <span class="n">name</span><span class="o">=</span><span class="s2">&quot;my-api&quot;</span><span class="p">,</span>
     <span class="n">outdir</span><span class="o">=</span><span class="s2">&quot;packages/api&quot;</span><span class="p">,</span>
     <span class="n">client_languages</span><span class="o">=</span><span class="p">[],</span>
-    <span class="c1"># The fully qualified service name for your API, including both the namespace and service name:</span>
-    <span class="n">service_name</span><span class="o">=</span><span class="s2">&quot;com.mycompany#MyService&quot;</span><span class="p">,</span>
-    <span class="c1"># Custom directory for your smithy model, relative to the project outdir</span>
-    <span class="n">model_dir</span><span class="o">=</span><span class="s2">&quot;api-model&quot;</span><span class="p">,</span>
+    <span class="c1"># The fully qualified service name for your API</span>
+    <span class="n">service_name</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;namespace&quot;</span><span class="p">:</span> <span class="s2">&quot;com.mycompany&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;service_name&quot;</span><span class="p">:</span> <span class="s2">&quot;MyService&quot;</span>
+    <span class="p">},</span>
     <span class="c1"># By default, the contents of `smithy-build/output` will be ignored by source control.</span>
     <span class="c1"># Set this to false to include it, for example if you are generating clients directly from the smithy model.</span>
     <span class="n">ignore_smithy_build_output</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
@@ -2635,7 +2640,7 @@ aws-prototyping-sdk library.</p>
 </code></pre></div>
 <p>You will need to set up a shared virtual environment and configure dependencies via the monorepo (see README.md for the nx-monorepo package). An example of a full <code>.projenrc.ts</code> might be:</p>
 <div class="highlight"><pre><span></span><code><span class="c1"># Example automatically generated from non-compiling source. May contain errors.</span>
-<span class="kn">from</span> <span class="nn">projen.VenvOptions</span> <span class="kn">import</span> <span class="n">VenvOptions</span><span class="p">,</span> <span class="n">VenvOptions</span>
+<span class="kn">from</span> <span class="nn">projen.VenvOptions</span> <span class="kn">import</span> <span class="n">VenvOptions</span>
 <span class="kn">from</span> <span class="nn">aws_prototyping_sdk</span> <span class="kn">import</span> <span class="n">nx_monorepo</span>
 <span class="kn">from</span> <span class="nn">aws_prototyping_sdk.open_api_gateway</span> <span class="kn">import</span> <span class="n">ClientLanguage</span><span class="p">,</span> <span class="n">OpenApiGatewayPythonProject</span>
 <span class="kn">from</span> <span class="nn">projen.awscdk</span> <span class="kn">import</span> <span class="n">AwsCdkPythonApp</span>
@@ -2655,11 +2660,11 @@ aws-prototyping-sdk library.</p>
     <span class="n">author_name</span><span class="o">=</span><span class="s2">&quot;jack&quot;</span><span class="p">,</span>
     <span class="n">author_email</span><span class="o">=</span><span class="s2">&quot;me@example.com&quot;</span><span class="p">,</span>
     <span class="n">client_languages</span><span class="o">=</span><span class="p">[</span><span class="n">ClientLanguage</span><span class="o">.</span><span class="n">TYPESCRIPT</span><span class="p">],</span>
-    <span class="n">venv_options</span><span class="o">=</span><span class="n">VenvOptions</span><span class="p">(</span>
+    <span class="n">venv_options</span><span class="o">=</span><span class="p">{</span>
         <span class="c1"># Use a shared virtual env dir.</span>
         <span class="c1"># The generated python client will also use this virtual env dir</span>
-        <span class="n">envdir</span><span class="o">=</span><span class="s2">&quot;../../.env&quot;</span>
-    <span class="p">)</span>
+        <span class="s2">&quot;envdir&quot;</span><span class="p">:</span> <span class="s2">&quot;../../.env&quot;</span>
+    <span class="p">}</span>
 <span class="p">)</span>
 
 <span class="c1"># Install into virtual env so it&#39;s available for the cdk app</span>
@@ -2797,7 +2802,7 @@ aws-prototyping-sdk library.</p>
 <h4 id="supported-protocols">Supported Protocols</h4>
 <p>Currently only <a href="https://awslabs.github.io/smithy/2.0/aws/protocols/aws-restjson1-protocol.html">AWS restJson1</a> is supported. Please ensure your service is annotated with the <code>@restJson1</code> trait.</p>
 <h4 id="multiple-files">Multiple Files</h4>
-<p>You can split your definition into multiple files and folders, so long as they are all under the <code>model</code> directory in your API project.</p>
+<p>You can split your definition into multiple files and folders, so long as they are all under the <code>smithy/src/main/smithy</code> directory in your API project.</p>
 <h4 id="authorizers">Authorizers</h4>
 <p>Smithy supports <a href="https://awslabs.github.io/smithy/2.0/aws/aws-auth.html">adding API Gateway authorizers in the model itself</a>. Given that at model definition time one usually does not know the ARN of the user pool or lambda function for an authorizer, it is recommended to add the authorizer(s) in your Api CDK construct.</p>
 <p>If using Smithy generated clients, some authorizer traits (eg sigv4) will include configuring the client for that particular method of authorization, so it can be beneficial to still define authorizers in the model. We therefore support specifying authorizers in both the model and the construct, but note that the construct will take precedence where the authorizer ID is the same.</p>
@@ -3005,7 +3010,7 @@ aws-prototyping-sdk library.</p>
 <span class="n">client</span><span class="o">.</span><span class="n">say_hello</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Jack&quot;</span><span class="p">)</span>
 </code></pre></div>
 <h4 id="python_1">Python</h4>
-<p>The <a href="https://openapi-generator.tech/docs/generators/python-experimental">python-experimental</a> OpenAPI generator is used to generate OpenAPI clients for python.</p>
+<p>The <a href="https://openapi-generator.tech/docs/generators/python">python</a> OpenAPI generator is used to generate OpenAPI clients for python.</p>
 <p>Example usage:</p>
 <div class="highlight"><pre><span></span><code><span class="kn">from</span> <span class="nn">my_api_python</span> <span class="kn">import</span> <span class="n">ApiClient</span><span class="p">,</span> <span class="n">Configuration</span>
 <span class="kn">from</span> <span class="nn">my_api_python.api.default_api</span> <span class="kn">import</span> <span class="n">DefaultApi</span>
@@ -3529,7 +3534,7 @@ aws-prototyping-sdk library.</p>
 <p>When multiple tags are used, the "first" tag is considered to be the API that the operation belongs to, so in the generated client, the above example operation would be included in the <code>PetsApi</code> client but not the <code>UsersApi</code> client.</p>
 <p>Multiple tags are still useful for documentation generation, for example <code>DocumentationFormat.HTML_REDOC</code> will group operations by tag in the side navigation bar.</p>
 <p>If you would like to introduce tags without breaking existing clients, we recommend first adding a tag named <code>default</code> to all operations.</p>
-<p>⚠️ <strong>Important Note</strong>: Smithy version 1.27.2 and below sorts tags in alphabetical order and so the "first" tag will be the earliest in the alphabet. Therefore, if using tags in Smithy, we currently recommend prefixing your desired first tag with an underscore (for example <code>_default</code>). This will be rectified in the next Smithy release, where tag order from the <code>@tags</code> trait will be preserved.</p>
+<p>⚠️ <strong>Important Note</strong>: Smithy versions below <code>1.28.0</code> sort tags in alphabetical order and so the "first" tag will be the earliest in the alphabet. Therefore, if using tags with older versions of Smithy, we recommend prefixing your desired first tag with an underscore (for example <code>_default</code>). This is rectified in <code>1.28.0</code>, where tag order from the <code>@tags</code> trait is preserved.</p>
 <h3 id="breaking-changes">Breaking Changes</h3>
 <ul>
 <li>
@@ -5121,6 +5126,7 @@ applied to all methods without an authorizer at the integration level.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">OpenApiGatewayJavaProjectOptions</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -5194,6 +5200,11 @@ applied to all methods without an authorizer at the integration level.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProjectOptions.property.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProjectOptions.property.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProjectOptions.property.logging">logging</a></code></td>
@@ -5475,6 +5486,14 @@ applied to all methods without an authorizer at the integration level.</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProjectOptions.property.gitOptions"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProjectOptions.property.logging"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span>
@@ -6189,6 +6208,7 @@ will compile &amp; execute <code>main()</code> from <code>src/main/java/projenrc
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">OpenApiGatewayPythonProjectOptions</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -6270,6 +6290,11 @@ will compile &amp; execute <code>main()</code> from <code>src/main/java/projenrc
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProjectOptions.property.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProjectOptions.property.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProjectOptions.property.logging">logging</a></code></td>
@@ -6591,6 +6616,14 @@ will compile &amp; execute <code>main()</code> from <code>src/main/java/projenrc
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_1"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProjectOptions.property.gitOptions"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_1"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProjectOptions.property.logging"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span>
@@ -7520,6 +7553,7 @@ rule set will be associated with the API. These options may disable or override 
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">OpenApiGatewayTsProjectOptions</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -7574,6 +7608,7 @@ rule set will be associated with the API. These options may disable or override 
   <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_dependency_options</span><span class="p">:</span> <span class="n">PeerDependencyOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_deps</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">pnpm_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository_directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">scoped_packages_options</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ScopedPackagesOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -7681,6 +7716,11 @@ rule set will be associated with the API. These options may disable or override 
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.logging">logging</a></code></td>
@@ -7951,6 +7991,11 @@ rule set will be associated with the API. These options may disable or override 
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.peerDeps">peer_deps</a></code></td>
 <td><code>typing.List[str]</code></td>
 <td>Peer dependencies for this module.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.pnpmVersion">pnpm_version</a></code></td>
+<td><code>str</code></td>
+<td>The version of PNPM to use if using PNPM as a package manager.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.repository">repository</a></code></td>
@@ -8402,6 +8447,14 @@ rule set will be associated with the API. These options may disable or override 
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_2"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.gitOptions"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_2"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.logging"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span>
@@ -8961,6 +9014,15 @@ breaking change for your customers.</p>
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &amp;
 test your module against the lowest peer version required.</p>
+<hr />
+<h5 id="pnpm_versionoptional"><code>pnpm_version</code><sup>Optional</sup> <a name="pnpm_version" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.pnpmVersion"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">pnpm_version</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> str</li>
+<li><em>Default:</em> "7"</li>
+</ul>
+<p>The version of PNPM to use if using PNPM as a package manager.</p>
 <hr />
 <h5 id="repositoryoptional"><code>repository</code><sup>Optional</sup> <a name="repository" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProjectOptions.property.repository"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">repository</span><span class="p">:</span> <span class="nb">str</span>
@@ -9980,6 +10042,7 @@ Authorizers specified at the integration level will override this for that opera
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">SmithyApiGatewayJavaProjectOptions</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -10057,6 +10120,11 @@ Authorizers specified at the integration level will override this for that opera
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProjectOptions.property.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProjectOptions.property.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProjectOptions.property.logging">logging</a></code></td>
@@ -10358,6 +10426,14 @@ Authorizers specified at the integration level will override this for that opera
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_3"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProjectOptions.property.gitOptions"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_3"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProjectOptions.property.logging"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span>
@@ -11184,6 +11260,7 @@ of gradle to the one provided by default</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">SmithyApiGatewayPythonProjectOptions</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -11269,6 +11346,11 @@ of gradle to the one provided by default</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProjectOptions.property.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProjectOptions.property.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProjectOptions.property.logging">logging</a></code></td>
@@ -11610,6 +11692,14 @@ of gradle to the one provided by default</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_4"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProjectOptions.property.gitOptions"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_4"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProjectOptions.property.logging"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span>
@@ -12238,6 +12328,7 @@ of gradle to the one provided by default</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">SmithyApiGatewayTsProjectOptions</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -12292,6 +12383,7 @@ of gradle to the one provided by default</p>
   <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_dependency_options</span><span class="p">:</span> <span class="n">PeerDependencyOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_deps</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">pnpm_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository_directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">scoped_packages_options</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ScopedPackagesOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -12403,6 +12495,11 @@ of gradle to the one provided by default</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.logging">logging</a></code></td>
@@ -12673,6 +12770,11 @@ of gradle to the one provided by default</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.peerDeps">peer_deps</a></code></td>
 <td><code>typing.List[str]</code></td>
 <td>Peer dependencies for this module.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.pnpmVersion">pnpm_version</a></code></td>
+<td><code>str</code></td>
+<td>The version of PNPM to use if using PNPM as a package manager.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.repository">repository</a></code></td>
@@ -13144,6 +13246,14 @@ of gradle to the one provided by default</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_5"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.gitOptions"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_5"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.logging"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span>
@@ -13703,6 +13813,15 @@ breaking change for your customers.</p>
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &amp;
 test your module against the lowest peer version required.</p>
+<hr />
+<h5 id="pnpm_versionoptional_1"><code>pnpm_version</code><sup>Optional</sup> <a name="pnpm_version" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.pnpmVersion"></a></h5>
+<div class="highlight"><pre><span></span><code><span class="n">pnpm_version</span><span class="p">:</span> <span class="nb">str</span>
+</code></pre></div>
+<ul>
+<li><em>Type:</em> str</li>
+<li><em>Default:</em> "7"</li>
+</ul>
+<p>The version of PNPM to use if using PNPM as a package manager.</p>
 <hr />
 <h5 id="repositoryoptional_1"><code>repository</code><sup>Optional</sup> <a name="repository" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProjectOptions.property.repository"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">repository</span><span class="p">:</span> <span class="nb">str</span>
@@ -16049,6 +16168,7 @@ applied to all methods without an authorizer at the integration level.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">OpenApiGatewayJavaProject</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -16121,6 +16241,11 @@ applied to all methods without an authorizer at the integration level.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProject.Initializer.parameter.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProject.Initializer.parameter.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProject.Initializer.parameter.logging">logging</a></code></td>
@@ -16398,6 +16523,12 @@ applied to all methods without an authorizer at the integration level.</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_6"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProject.Initializer.parameter.gitOptions"></a></h5>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_6"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayJavaProject.Initializer.parameter.logging"></a></h5>
 <ul>
@@ -17835,6 +17966,7 @@ this task should synthesize the project files.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">OpenApiGatewayPythonProject</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -17915,6 +18047,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProject.Initializer.parameter.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProject.Initializer.parameter.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProject.Initializer.parameter.logging">logging</a></code></td>
@@ -18232,6 +18369,12 @@ this task should synthesize the project files.</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_7"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProject.Initializer.parameter.gitOptions"></a></h5>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_7"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayPythonProject.Initializer.parameter.logging"></a></h5>
 <ul>
@@ -19650,6 +19793,7 @@ this task should synthesize the project files.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">OpenApiGatewayTsProject</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -19704,6 +19848,7 @@ this task should synthesize the project files.</p>
   <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_dependency_options</span><span class="p">:</span> <span class="n">PeerDependencyOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_deps</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">pnpm_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository_directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">scoped_packages_options</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ScopedPackagesOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -19810,6 +19955,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.logging">logging</a></code></td>
@@ -20080,6 +20230,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.peerDeps">peer_deps</a></code></td>
 <td><code>typing.List[str]</code></td>
 <td>Peer dependencies for this module.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.pnpmVersion">pnpm_version</a></code></td>
+<td><code>str</code></td>
+<td>The version of PNPM to use if using PNPM as a package manager.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.repository">repository</a></code></td>
@@ -20527,6 +20682,12 @@ this task should synthesize the project files.</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_8"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.gitOptions"></a></h5>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_8"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.logging"></a></h5>
 <ul>
@@ -20988,6 +21149,13 @@ breaking change for your customers.</p>
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &amp;
 test your module against the lowest peer version required.</p>
+<hr />
+<h5 id="pnpm_versionoptional_2"><code>pnpm_version</code><sup>Optional</sup> <a name="pnpm_version" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.pnpmVersion"></a></h5>
+<ul>
+<li><em>Type:</em> str</li>
+<li><em>Default:</em> "7"</li>
+</ul>
+<p>The version of PNPM to use if using PNPM as a package manager.</p>
 <hr />
 <h5 id="repositoryoptional_2"><code>repository</code><sup>Optional</sup> <a name="repository" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.Initializer.parameter.repository"></a></h5>
 <ul>
@@ -22422,7 +22590,7 @@ add/upgrade</code>. If you wish to specify a version range use this syntax:
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.property.maxNodeVersion">max_node_version</a></code></td>
 <td><code>str</code></td>
-<td>Maximum node version required by this pacakge.</td>
+<td>Maximum node version required by this package.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.property.minNodeVersion">min_node_version</a></code></td>
@@ -22904,7 +23072,7 @@ tarball will be placed under <code>dist/js/boom-boom-1.2.3.tg</code>.</p>
 <ul>
 <li><em>Type:</em> str</li>
 </ul>
-<p>Maximum node version required by this pacakge.</p>
+<p>Maximum node version required by this package.</p>
 <hr />
 <h5 id="min_node_versionoptional_3"><code>min_node_version</code><sup>Optional</sup> <a name="min_node_version" id="@aws-prototyping-sdk/open-api-gateway.OpenApiGatewayTsProject.property.minNodeVersion"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">min_node_version</span><span class="p">:</span> <span class="nb">str</span>
@@ -23133,6 +23301,7 @@ this task should synthesize the project files.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">SmithyApiGatewayJavaProject</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -23209,6 +23378,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.Initializer.parameter.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.Initializer.parameter.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.Initializer.parameter.logging">logging</a></code></td>
@@ -23506,6 +23680,12 @@ this task should synthesize the project files.</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_9"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.Initializer.parameter.gitOptions"></a></h5>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_9"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.Initializer.parameter.logging"></a></h5>
 <ul>
@@ -24599,11 +24779,6 @@ resolved from the root of <em>this</em> project.</p>
 <td><code>bool</code></td>
 <td>Force to generate code and docs even if there were no changes in spec.</td>
 </tr>
-<tr>
-<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.property.modelDir">model_dir</a></code></td>
-<td><code>str</code></td>
-<td>The directory in which the smithy model files reside.</td>
-</tr>
 </tbody>
 </table>
 <hr />
@@ -24948,14 +25123,6 @@ as the package for the api project.</p>
 </ul>
 <p>Force to generate code and docs even if there were no changes in spec.</p>
 <hr />
-<h5 id="model_dirrequired"><code>model_dir</code><sup>Required</sup> <a name="model_dir" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayJavaProject.property.modelDir"></a></h5>
-<div class="highlight"><pre><span></span><code><span class="n">model_dir</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-<ul>
-<li><em>Type:</em> str</li>
-</ul>
-<p>The directory in which the smithy model files reside.</p>
-<hr />
 <h4 id="constants_3">Constants <a name="Constants" id="Constants"></a></h4>
 <table>
 <thead>
@@ -24992,6 +25159,7 @@ this task should synthesize the project files.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">SmithyApiGatewayPythonProject</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -25076,6 +25244,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.Initializer.parameter.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.Initializer.parameter.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.Initializer.parameter.logging">logging</a></code></td>
@@ -25413,6 +25586,12 @@ this task should synthesize the project files.</p>
 <li><em>Default:</em> true</li>
 </ul>
 <p>Whether to commit the managed files by default.</p>
+<hr />
+<h5 id="git_optionsoptional_10"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.Initializer.parameter.gitOptions"></a></h5>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
 <hr />
 <h5 id="loggingoptional_10"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.Initializer.parameter.logging"></a></h5>
 <ul>
@@ -26488,11 +26667,6 @@ resolved from the root of <em>this</em> project.</p>
 <td><code>bool</code></td>
 <td>Force to generate code and docs even if there were no changes in spec.</td>
 </tr>
-<tr>
-<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.property.modelDir">model_dir</a></code></td>
-<td><code>str</code></td>
-<td>The directory in which the smithy model files reside.</td>
-</tr>
 </tbody>
 </table>
 <hr />
@@ -26836,14 +27010,6 @@ FQN of the project type.</p>
 </ul>
 <p>Force to generate code and docs even if there were no changes in spec.</p>
 <hr />
-<h5 id="model_dirrequired_1"><code>model_dir</code><sup>Required</sup> <a name="model_dir" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayPythonProject.property.modelDir"></a></h5>
-<div class="highlight"><pre><span></span><code><span class="n">model_dir</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-<ul>
-<li><em>Type:</em> str</li>
-</ul>
-<p>The directory in which the smithy model files reside.</p>
-<hr />
 <h4 id="constants_4">Constants <a name="Constants" id="Constants"></a></h4>
 <table>
 <thead>
@@ -26880,6 +27046,7 @@ this task should synthesize the project files.</p>
 <span class="n">aws_prototyping_sdk</span><span class="o">.</span><span class="n">open_api_gateway</span><span class="o">.</span><span class="n">SmithyApiGatewayTsProject</span><span class="p">(</span>
   <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
   <span class="n">commit_generated</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">git_options</span><span class="p">:</span> <span class="n">GitOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">logging</span><span class="p">:</span> <span class="n">LoggerOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">outdir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">parent</span><span class="p">:</span> <span class="n">Project</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -26934,6 +27101,7 @@ this task should synthesize the project files.</p>
   <span class="n">package_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_dependency_options</span><span class="p">:</span> <span class="n">PeerDependencyOptions</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">peer_deps</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+  <span class="n">pnpm_version</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">repository_directory</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
   <span class="n">scoped_packages_options</span><span class="p">:</span> <span class="n">typing</span><span class="o">.</span><span class="n">List</span><span class="p">[</span><span class="n">ScopedPackagesOptions</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -27044,6 +27212,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.commitGenerated">commit_generated</a></code></td>
 <td><code>bool</code></td>
 <td>Whether to commit the managed files by default.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.gitOptions">git_options</a></code></td>
+<td><code>projen.GitOptions</code></td>
+<td>Configuration options for git.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.logging">logging</a></code></td>
@@ -27314,6 +27487,11 @@ this task should synthesize the project files.</p>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.peerDeps">peer_deps</a></code></td>
 <td><code>typing.List[str]</code></td>
 <td>Peer dependencies for this module.</td>
+</tr>
+<tr>
+<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.pnpmVersion">pnpm_version</a></code></td>
+<td><code>str</code></td>
+<td>The version of PNPM to use if using PNPM as a package manager.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.repository">repository</a></code></td>
@@ -27782,6 +27960,12 @@ this task should synthesize the project files.</p>
 </ul>
 <p>Whether to commit the managed files by default.</p>
 <hr />
+<h5 id="git_optionsoptional_11"><code>git_options</code><sup>Optional</sup> <a name="git_options" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.gitOptions"></a></h5>
+<ul>
+<li><em>Type:</em> projen.GitOptions</li>
+</ul>
+<p>Configuration options for git.</p>
+<hr />
 <h5 id="loggingoptional_11"><code>logging</code><sup>Optional</sup> <a name="logging" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.logging"></a></h5>
 <ul>
 <li><em>Type:</em> projen.LoggerOptions</li>
@@ -28242,6 +28426,13 @@ breaking change for your customers.</p>
 enabled by default), projen will automatically add a dev dependency with a
 pinned version for each peer dependency. This will ensure that you build &amp;
 test your module against the lowest peer version required.</p>
+<hr />
+<h5 id="pnpm_versionoptional_3"><code>pnpm_version</code><sup>Optional</sup> <a name="pnpm_version" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.pnpmVersion"></a></h5>
+<ul>
+<li><em>Type:</em> str</li>
+<li><em>Default:</em> "7"</li>
+</ul>
+<p>The version of PNPM to use if using PNPM as a package manager.</p>
 <hr />
 <h5 id="repositoryoptional_3"><code>repository</code><sup>Optional</sup> <a name="repository" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.Initializer.parameter.repository"></a></h5>
 <ul>
@@ -29712,7 +29903,7 @@ add/upgrade</code>. If you wish to specify a version range use this syntax:
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.property.maxNodeVersion">max_node_version</a></code></td>
 <td><code>str</code></td>
-<td>Maximum node version required by this pacakge.</td>
+<td>Maximum node version required by this package.</td>
 </tr>
 <tr>
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.property.minNodeVersion">min_node_version</a></code></td>
@@ -29833,11 +30024,6 @@ add/upgrade</code>. If you wish to specify a version range use this syntax:
 <td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.property.pnpmWorkspace">pnpm_workspace</a></code></td>
 <td><code>projen.YamlFile</code></td>
 <td>Reference to the PNPM workspace yaml file which adds the dependency between this project and the generated typescript client when this project is used in a monorepo, and the package manager is PNPM.</td>
-</tr>
-<tr>
-<td><code><a href="#@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.property.modelDir">model_dir</a></code></td>
-<td><code>str</code></td>
-<td>The directory in which the smithy model files reside.</td>
 </tr>
 </tbody>
 </table>
@@ -30199,7 +30385,7 @@ tarball will be placed under <code>dist/js/boom-boom-1.2.3.tg</code>.</p>
 <ul>
 <li><em>Type:</em> str</li>
 </ul>
-<p>Maximum node version required by this pacakge.</p>
+<p>Maximum node version required by this package.</p>
 <hr />
 <h5 id="min_node_versionoptional_5"><code>min_node_version</code><sup>Optional</sup> <a name="min_node_version" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.property.minNodeVersion"></a></h5>
 <div class="highlight"><pre><span></span><code><span class="n">min_node_version</span><span class="p">:</span> <span class="nb">str</span>
@@ -30392,14 +30578,6 @@ release workflow.</p>
 </ul>
 <p>Reference to the PNPM workspace yaml file which adds the dependency between this project and the generated typescript client when this project is used in a monorepo, and the package manager is PNPM.</p>
 <hr />
-<h5 id="model_dirrequired_2"><code>model_dir</code><sup>Required</sup> <a name="model_dir" id="@aws-prototyping-sdk/open-api-gateway.SmithyApiGatewayTsProject.property.modelDir"></a></h5>
-<div class="highlight"><pre><span></span><code><span class="n">model_dir</span><span class="p">:</span> <span class="nb">str</span>
-</code></pre></div>
-<ul>
-<li><em>Type:</em> str</li>
-</ul>
-<p>The directory in which the smithy model files reside.</p>
-<hr />
 <h4 id="constants_5">Constants <a name="Constants" id="Constants"></a></h4>
 <table>
 <thead>
@@ -30552,7 +30730,7 @@ this task should synthesize the project files.</p>
   <small>
     
       Last update:
-      2023-02-15
+      2023-03-25
     
   </small>
 </div>
